@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connvel Applications</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #c95f40;
+            --primary-light: #fdf2f0;
+            --bg-body: #f8f9fa;
+            --surface: #ffffff;
+            --text-heading: #1e1e2f;
+            --text-body: #5e6278;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border-radius: 16px;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-body);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--surface);
+            padding: 30px;
+            border-right: 1px solid #eee;
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            font-family: 'Playfair Display';
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            color: var(--text-heading);
+            font-weight: 500;
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .main {
+            margin-left: 260px;
+            padding: 40px;
+            flex-grow: 1;
+        }
+
+        .header-sec {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header-sec h1 {
+            font-family: 'Playfair Display';
+            font-size: 2rem;
+            color: var(--text-heading);
+            margin: 0;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-body);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-back:hover {
+            color: var(--primary);
+            transform: translateX(-5px);
+        }
+
+        /* FILTERS */
+        .toolbar {
+            background: var(--surface);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            font-family: 'Outfit';
+            box-sizing: border-box;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .filter-select {
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            font-family: 'Outfit';
+            cursor: pointer;
+        }
+
+        /* GRID */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #eee;
+        }
+
+        .card[data-status="Pending"]::before {
+            background: var(--warning);
+        }
+
+        .card[data-status="Approved"]::before {
+            background: var(--success);
+        }
+
+        .card[data-status="Rejected"]::before {
+            background: var(--danger);
+        }
+
+        .card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .u-name {
+            font-family: 'Playfair Display';
+            font-size: 1.3rem;
+            margin: 0;
+            color: var(--text-heading);
+        }
+
+        .role-tag {
+            font-size: 0.75rem;
+            background: #f3f4f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #666;
+            font-weight: 600;
+            margin-top: 4px;
+            display: inline-block;
+        }
+
+        .status-pill {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .st-Pending {
+            background: #fffbeb;
+            color: var(--warning);
+        }
+
+        .st-Approved {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .st-Rejected {
+            background: #fef2f2;
+            color: var(--danger);
+        }
+
+        .details {
+            margin-bottom: 20px;
+        }
+
+        .d-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .d-item i {
+            width: 20px;
+            text-align: center;
+            color: #999;
+        }
+
+        .d-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+
+        .icon-btn {
+            border: none;
+            background: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .icon-btn:hover {
+            color: var(--primary);
+        }
+
+        .icon-btn.delete:hover {
+            color: var(--danger);
+        }
+
+        .main-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-ap {
+            background: #ecfdf5;
+            color: var(--success);
+        }
+
+        .btn-ap:hover {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-rj {
+            background: #fef2f2;
+            color: var(--danger);
+        }
+
+        .btn-rj:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-pe {
+            background: #fffbeb;
+            color: var(--warning);
+        }
+
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 50px;
+            color: #999;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sidebar">
+        <div class="brand"><i class="fas fa-layer-group"></i> Connvel</div>
+        <a href="admin_dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> Dashboard</a>
+        <a href="#" class="nav-link active"><i class="fas fa-users"></i> Applications</a>
+    </nav>
+
+    <main class="main">
+        <div class="header-sec">
+            <h1>Applications</h1>
+            <a href="admin_dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search applications..." onkeyup="filterApps()">
+            </div>
+            <select class="filter-select" id="statusFilter" onchange="filterApps()">
+                <option value="All">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+
+        <div class="app-grid" id="appGrid">
+            <div class="empty-state" id="emptyState">
+                <i class="far fa-folder-open" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                <p>No applications found.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- SUPABASE CONFIG ---
+        const SUPABASE_URL = 'https://okefeflworafgikasbzq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let allApps = [];
+
+        window.onload = function () {
+            if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+                window.location.href = 'admin_dashboard.html'; // Redirect to login
+            } else {
+                fetchApps();
+            }
+        };
+
+        async function fetchApps() {
+            try {
+                document.getElementById('appGrid').innerHTML = '<p style="padding:20px;">Loading...</p>';
+                const { data, error } = await db.from('applications').select('*').order('submitted_at', { ascending: false });
+
+                if (error) throw error;
+
+                allApps = data || [];
+                renderApps(allApps);
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('appGrid').innerHTML = '<p style="color:red">Error loading data.</p>';
+            }
+        }
+
+        function renderApps(list) {
+            const grid = document.getElementById('appGrid');
+            grid.innerHTML = '';
+
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="empty-state" style="display:block;"><p>No applications found.</p></div>`;
+                return;
+            }
+
+            list.forEach(app => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.status = app.status;
+
+                card.innerHTML = `
+                    <div class="card-head">
+                        <div>
+                            <h3 class="u-name">${app.full_name}</h3>
+                            <span class="role-tag">${app.category}</span>
+                        </div>
+                        <span class="status-pill st-${app.status}" id="badge-${app.id}">${app.status}</span>
+                    </div>
+
+                    <div class="details">
+                        <div class="d-item"><i class="fas fa-building"></i> ${app.institution_name || 'N/A'}</div>
+                        <div class="d-item"><i class="fab fa-whatsapp"></i> ${app.whatsapp}</div>
+                        <div class="d-item"><i class="fas fa-envelope"></i> ${app.work_email || app.personal_email || '-'}</div>
+                        <div class="d-item"><i class="fab fa-linkedin"></i> <a href="${app.linkedin_url}" target="_blank">View Profile</a></div>
+                    </div>
+
+                    <div class="actions">
+                        <div>
+                             <button class="icon-btn delete" onclick="deleteApp(${app.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="main-btns" id="btns-${app.id}">
+                            ${getButtons(app.status, app.id)}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function getButtons(status, id) {
+            if (status === 'Pending') {
+                return `<button class="btn-sm btn-ap" onclick="setStatus(${id}, 'Approved')">Approve</button>
+                        <button class="btn-sm btn-rj" onclick="setStatus(${id}, 'Rejected')">Reject</button>`;
+            } else if (status === 'Approved') {
+                return `<button class="btn-sm btn-pe" onclick="setStatus(${id}, 'Pending')">Revoke</button>`;
+            } else {
+                return `<button class="btn-sm btn-pe" onclick="setStatus(${id}, 'Pending')">Re-Open</button>`;
+            }
+        }
+
+        function filterApps() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const stat = document.getElementById('statusFilter').value;
+
+            const filtered = allApps.filter(app => {
+                const sMatch = (stat === 'All' || app.status === stat);
+                const nMatch = app.full_name.toLowerCase().includes(search);
+                return sMatch && nMatch;
+            });
+            renderApps(filtered);
+        }
+
+        // --- ACTIONS ---
+        async function setStatus(id, newStatus) {
+            // Optimistic UI
+            const badge = document.getElementById('badge-' + id);
+            const btns = document.getElementById('btns-' + id);
+            const card = badge.closest('.card');
+
+            const prevStatus = badge.innerText;
+            badge.className = `status-pill st-${newStatus}`;
+            badge.innerText = newStatus;
+            card.dataset.status = newStatus;
+            btns.innerHTML = `<span style="font-size:0.8rem; color:#999;">Updating...</span>`;
+
+            try {
+                const { error } = await db.from('applications').update({ status: newStatus }).eq('id', id);
+                if (error) throw error;
+
+                btns.innerHTML = getButtons(newStatus, id);
+
+                // Update local array
+                const idx = allApps.findIndex(a => a.id == id);
+                if (idx > -1) allApps[idx].status = newStatus;
+
+            } catch (e) {
+                alert("Update failed: " + e.message);
+                // Revert
+                badge.innerText = prevStatus;
+                badge.className = `status-pill st-${prevStatus}`;
+            }
+        }
+
+        async function deleteApp(id) {
+            if (confirm("Are you sure you want to delete this application?")) {
+                try {
+                    const { error } = await db.from('applications').delete().eq('id', id);
+                    if (error) throw error;
+
+                    // Remove from UI
+                    document.getElementById('badge-' + id).closest('.card').remove();
+                    // Remove from local array
+                    allApps = allApps.filter(a => a.id != id);
+
+                } catch (e) {
+                    alert("Delete failed: " + e.message);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

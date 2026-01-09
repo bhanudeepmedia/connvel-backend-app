@@ -13,7 +13,6 @@
             --primary: #c95f40;
             --bg: #F9FAFB;
             --text: #1f2937;
-            --border: #e5e7eb;
             --card: #ffffff;
         }
 
@@ -35,7 +34,6 @@
             padding: 20px;
         }
 
-        /* CONTAINER */
         .app-container {
             width: 100%;
             max-width: 550px;
@@ -43,12 +41,10 @@
             position: relative;
             border-radius: 24px;
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
-            /* Soft modern shadow */
             padding: 40px;
             transition: height 0.3s ease;
         }
 
-        /* MOBILE OPTIMIZATIONS */
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -63,33 +59,6 @@
 
             h1 {
                 font-size: 1.8rem !important;
-            }
-
-            .subtitle {
-                font-size: 0.9rem !important;
-            }
-
-            .radio-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .action-row {
-                flex-direction: column-reverse;
-                gap: 15px;
-            }
-
-            .btn-back {
-                width: 100%;
-                text-align: center;
-            }
-
-            .d-row {
-                flex-direction: column;
             }
         }
 
@@ -112,7 +81,6 @@
             padding: 30px;
         }
 
-        /* TYPOGRAPHY */
         h1 {
             font-family: 'Playfair Display';
             font-size: 2.4rem;
@@ -128,7 +96,6 @@
             margin-bottom: 35px;
         }
 
-        /* STEPS ANIMATION */
         .step {
             display: none;
             animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -150,7 +117,6 @@
             }
         }
 
-        /* INPUTS */
         .form-group {
             margin-bottom: 24px;
         }
@@ -165,9 +131,7 @@
             margin-bottom: 8px;
         }
 
-        input[type="text"],
-        input[type="number"],
-        input[type="email"] {
+        input {
             width: 100%;
             padding: 16px;
             font-size: 1.05rem;
@@ -186,12 +150,7 @@
             box-shadow: 0 0 0 4px rgba(201, 95, 64, 0.1);
         }
 
-        input::placeholder {
-            color: #d1d5db;
-            font-weight: 300;
-        }
-
-        /* RADIO & SELECTION */
+        /* Custom Radio */
         .radio-group {
             display: flex;
             gap: 15px;
@@ -234,18 +193,12 @@
             background: #fff;
         }
 
-        .cat-option:hover {
-            transform: translateY(-3px);
-        }
-
         .cat-option.selected {
             background: #1f2937;
             color: white;
             border-color: #1f2937;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
-        /* BUTTONS */
         .btn-primary {
             width: 100%;
             background: var(--primary);
@@ -260,10 +213,6 @@
             box-shadow: 0 10px 20px rgba(201, 95, 64, 0.2);
         }
 
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
         .btn-back {
             background: none;
             border: none;
@@ -272,46 +221,8 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 1rem;
-            transition: 0.2s;
         }
 
-        .btn-back:hover {
-            color: #111;
-        }
-
-        .d-row {
-            display: flex;
-            gap: 15px;
-        }
-
-        /* REVIEW CARD */
-        .review-card {
-            background: #f9fafb;
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid #eee;
-        }
-
-        .r-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        .r-label {
-            color: #9ca3af;
-            font-weight: 500;
-        }
-
-        .r-val {
-            font-weight: 600;
-            color: #374151;
-            text-align: right;
-        }
-
-        /* DECORATION */
         .progress-dots {
             display: flex;
             justify-content: center;
@@ -332,12 +243,27 @@
             width: 20px;
             border-radius: 10px;
         }
+
+        /* Review */
+        .review-card {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #eee;
+        }
+
+        .r-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- SUCCESS OVERLAY (Terracotta Dark Theme) -->
     <div id="successOverlay">
         <h1 style="color:#c95f40; font-style:italic;">Welcome Aboard.</h1>
         <p style="color:#9ca3af; max-width:400px; margin-top:10px; font-size:1.1rem;">Your vibe has been logged. The
@@ -347,15 +273,12 @@
             onclick="location.reload()">Back to Earth</button>
     </div>
 
-    <!-- ALREADY SUBMITTED -->
     <div id="alreadySubmittedOverlay">
         <h1 style="color:white;">Chill, You're In.</h1>
         <p style="color:#666;">We already have your details.</p>
     </div>
 
     <form id="mainForm" class="app-container" onsubmit="return false;">
-
-        <!-- PROGRESS -->
         <div class="progress-dots">
             <div class="dot active" id="d1"></div>
             <div class="dot" id="d2"></div>
@@ -363,37 +286,33 @@
             <div class="dot" id="d4"></div>
         </div>
 
-        <!-- STEP 1: IDENTITY -->
+        <!-- STEP 1 (Dynamic Wrapper) -->
         <div class="step active" id="step1">
             <h1>The Basics</h1>
             <p class="subtitle">First things first, who are we talking to?</p>
 
-            <div class="form-group">
-                <label>What do you call yourself?</label>
-                <input type="text" id="fname" placeholder="Full Legal Name">
+            <div id="step1-dynamic">
+                <!-- Fallback Content if DB fails -->
+                <div class="form-group"><label>What do you call yourself?</label><input type="text" id="fname"
+                        placeholder="Full Legal Name"></div>
+                <div class="form-group"><label>Level / Age</label><input type="number" id="age" placeholder="24"></div>
             </div>
 
-            <div class="d-row">
-                <div class="form-group" style="flex:1;">
-                    <label>Level / Age</label>
-                    <input type="number" id="age" placeholder="24">
+            <!-- Gender is static for now -->
+            <div class="form-group">
+                <label>Identity</label>
+                <div class="radio-group">
+                    <div class="radio-card selected" onclick="selectGender('Male', this)">Him</div>
+                    <div class="radio-card" onclick="selectGender('Female', this)">Her</div>
+                    <div class="radio-card" onclick="selectGender('Other', this)">Them</div>
                 </div>
-                <!-- Custom Radio Group -->
-                <div class="form-group" style="flex:2;">
-                    <label>Identity</label>
-                    <div class="radio-group">
-                        <div class="radio-card selected" onclick="selectGender('Male', this)">Him</div>
-                        <div class="radio-card" onclick="selectGender('Female', this)">Her</div>
-                        <div class="radio-card" onclick="selectGender('Other', this)">Them</div>
-                    </div>
-                    <input type="hidden" id="gender" value="Male">
-                </div>
+                <input type="hidden" id="gender" value="Male">
             </div>
 
             <button class="btn-primary" onclick="nextStep(2)">Lets Go &rarr;</button>
         </div>
 
-        <!-- STEP 2: PROFESSION -->
+        <!-- STEP 2 (Categories - Static Logic) -->
         <div class="step" id="step2">
             <h1>The Daily Grind</h1>
             <p class="subtitle">What keeps you busy during the day?</p>
@@ -408,7 +327,7 @@
             <div id="dynamicFields">
                 <div class="form-group"><label id="lbl-inst">Where do you study?</label><input type="text" id="d_inst"
                         placeholder="University Name"></div>
-                <div class="d-row">
+                <div style="display:flex; gap:15px;">
                     <div class="form-group" style="flex:1;"><label id="lbl-role">Major / Course</label><input
                             type="text" id="d_role"></div>
                     <div class="form-group" style="flex:1;"><label id="lbl-extra">Year</label><input type="text"
@@ -416,44 +335,42 @@
                 </div>
             </div>
 
-            <div class="action-row">
+            <div style="display:flex; gap:10px;">
                 <button class="btn-back" onclick="prevStep(1)">Back</button>
                 <div style="flex:1;"><button class="btn-primary" onclick="nextStep(3)">Continue &rarr;</button></div>
             </div>
         </div>
 
-        <!-- STEP 3: CONTACT -->
+        <!-- STEP 3 (Dynamic Wrapper) -->
         <div class="step" id="step3">
             <h1>Stay Connected</h1>
             <p class="subtitle">Where should we send the invite?</p>
 
-            <div class="form-group"><label>Drop the Digits (WhatsApp)</label><input type="number" id="whatsapp"
-                    placeholder="9876543210"></div>
-            <div class="form-group"><label>LinkedIn Flex (URL)</label><input type="text" id="linkedin"
-                    placeholder="linkedin.com/in/you"></div>
-
-            <div class="d-row">
-                <div class="form-group" style="flex:1;"><label>Work Email</label><input type="email" id="w_email"></div>
-                <!-- <div class="form-group" style="flex:1;"><label>Personal Email</label><input type="email" id="p_email"></div> -->
+            <div id="step3-dynamic">
+                <!-- Fallback -->
+                <div class="form-group"><label>Drop the Digits (WhatsApp)</label><input type="number" id="whatsapp"
+                        placeholder="9876543210"></div>
+                <div class="form-group"><label>LinkedIn Flex (URL)</label><input type="text" id="linkedin"
+                        placeholder="linkedin.com/in/you"></div>
+                <div class="form-group"><label>Social Handle</label><input type="text" id="social"
+                        placeholder="@username"></div>
             </div>
-            <div class="form-group"><label>Social Handle (Insta/X)</label><input type="text" id="social"
-                    placeholder="@username"></div>
 
-            <div class="action-row">
+            <div class="form-group"><label>Work Email (Optional)</label><input type="email" id="w_email"></div>
+
+            <div style="display:flex; gap:10px;">
                 <button class="btn-back" onclick="prevStep(2)">Back</button>
                 <div style="flex:1;"><button class="btn-primary" onclick="prepareReview()">Review &rarr;</button></div>
             </div>
         </div>
 
-        <!-- STEP 4: REVIEW -->
+        <!-- STEP 4 -->
         <div class="step" id="step4">
             <h1>Vibe Check</h1>
             <p class="subtitle">Does this look like you?</p>
 
-            <div class="review-card">
-                <div class="r-item"><span class="r-label">Name</span> <span class="r-val" id="r_name">-</span></div>
-                <div class="r-item"><span class="r-label">Vibe</span> <span class="r-val" id="r_role">-</span></div>
-                <div class="r-item"><span class="r-label">Contact</span> <span class="r-val" id="r_wa">-</span></div>
+            <div class="review-card" id="reviewBox">
+                <!-- Populated via JS -->
             </div>
 
             <div
@@ -462,7 +379,7 @@
                 <span>I agree to keep the vibe check passed. <a href="#" style="color:var(--primary);">Terms</a>.</span>
             </div>
 
-            <div class="action-row">
+            <div style="display:flex; gap:10px;">
                 <button class="btn-back" onclick="prevStep(3)">Edit</button>
                 <div style="flex:1;"><button class="btn-primary" onclick="submitFinal()">Send It 🚀</button></div>
             </div>
@@ -471,34 +388,61 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // CONFIG
         const SUPABASE_URL = 'https://okefeflworafgikasbzq.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc';
-        const { createClient } = supabase;
-        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // CHECK SUBMISSION
-        if (localStorage.getItem('cv_submitted') === 'true') {
-            document.getElementById('mainForm').style.display = 'none';
-            document.getElementById('alreadySubmittedOverlay').style.display = 'flex';
+        let formConfig = []; // Stores dynamic fields
+
+        // INIT
+        window.onload = async function () {
+            if (localStorage.getItem('cv_submitted') === 'true') {
+                document.getElementById('mainForm').style.display = 'none';
+                document.getElementById('alreadySubmittedOverlay').style.display = 'flex';
+            }
+            await fetchFormConfig();
+        };
+
+        // 1. FETCH QUESTIONS
+        async function fetchFormConfig() {
+            const { data } = await db.from('form_questions').select('*').eq('is_active', true).order('display_order');
+            if (data && data.length > 0) {
+                formConfig = data;
+                renderDynamicSteps();
+            }
+        }
+
+        function renderDynamicSteps() {
+            // Render Step 1
+            const s1 = formConfig.filter(q => q.step_number === 1);
+            if (s1.length > 0) {
+                document.getElementById('step1-dynamic').innerHTML = s1.map(q => `
+                    <div class="form-group">
+                        <label>${q.question_label}</label>
+                        <input type="${q.input_type}" id="${q.field_key}" placeholder="${q.placeholder || ''}">
+                    </div>
+                `).join('');
+            }
+
+            // Render Step 3
+            const s3 = formConfig.filter(q => q.step_number === 3);
+            if (s3.length > 0) {
+                document.getElementById('step3-dynamic').innerHTML = s3.map(q => `
+                    <div class="form-group">
+                        <label>${q.question_label}</label>
+                        <input type="${q.input_type}" id="${q.field_key}" placeholder="${q.placeholder || ''}">
+                    </div>
+                `).join('');
+            }
         }
 
         // NAVIGATION
-        function nextStep(n) {
-            // Validations
-            if (n === 2 && !document.getElementById('fname').value) return alert("Hey! We need a name.");
-            if (n === 3 && !document.getElementById('d_inst').value) return alert("Tell us what you do!");
-
-            showStep(n);
-        }
-
+        function nextStep(n) { showStep(n); }
         function prevStep(n) { showStep(n); }
 
         function showStep(n) {
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + n).classList.add('active');
-
-            // Dots
             document.querySelectorAll('.dot').forEach((d, i) => {
                 d.classList.toggle('active', i < n);
                 d.style.background = i < n ? '#c95f40' : '#e5e7eb';
@@ -522,7 +466,6 @@
             document.querySelectorAll('.cat-option').forEach(e => e.classList.remove('selected'));
             el.classList.add('selected');
             document.getElementById('category').value = cat;
-
             const l = labels[cat];
             document.getElementById('lbl-inst').innerText = l[0];
             document.getElementById('lbl-role').innerText = l[1];
@@ -530,9 +473,22 @@
         }
 
         function prepareReview() {
-            document.getElementById('r_name').innerText = document.getElementById('fname').value;
-            document.getElementById('r_role').innerText = document.getElementById('category').value + ' @ ' + document.getElementById('d_inst').value;
-            document.getElementById('r_wa').innerText = '+91 ' + document.getElementById('whatsapp').value;
+            // Helper to safe get value
+            const getVal = (id) => { const el = document.getElementById(id); return el ? el.value : '-'; }
+
+            let html = `
+                <div class="r-item"><span style="color:#999;">Name</span> <b>${getVal('full_name') || getVal('fname')}</b></div>
+                <div class="r-item"><span style="color:#999;">Role</span> <b>${getVal('category')}</b></div>
+            `;
+
+            // Add dynamic values to review
+            formConfig.forEach(q => {
+                if (q.step_number === 3) {
+                    html += `<div class="r-item"><span style="color:#999;">${q.question_label.split('(')[0]}</span> <b>${getVal(q.field_key)}</b></div>`;
+                }
+            });
+
+            document.getElementById('reviewBox').innerHTML = html;
             nextStep(4);
         }
 
@@ -541,24 +497,35 @@
             if (!document.getElementById('terms').checked) return alert("Please check the terms box!");
 
             const btn = document.querySelector('button[onclick="submitFinal()"]');
-            btn.innerHTML = "Sending... <i class='fas fa-spinner fa-spin'></i>";
+            btn.innerHTML = "Sending...";
             btn.disabled = true;
 
+            // Base Payload
             const payload = {
-                full_name: document.getElementById('fname').value,
-                age: document.getElementById('age').value,
                 gender: document.getElementById('gender').value,
                 category: document.getElementById('category').value,
                 institution_name: document.getElementById('d_inst').value,
                 role_title: document.getElementById('d_role').value,
                 extra_detail: document.getElementById('d_extra').value,
-                whatsapp: document.getElementById('whatsapp').value,
-                work_email: document.getElementById('w_email').value, // personal email field kept for schema match if needed, or ignored
-                linkedin_url: document.getElementById('linkedin').value,
-                social_handle: document.getElementById('social').value,
+                work_email: document.getElementById('w_email').value,
                 status: 'Pending',
                 submitted_at: new Date().toISOString()
             };
+
+            // Dynamic Payload
+            // Scan for all inputs that match our internal field keys
+            // If the element exists in DOM, grab its value
+            const possibleKeys = ['full_name', 'fname', 'age', 'whatsapp', 'linkedin_url', 'social_handle']; // Default Fallbacks
+
+            // Add keys from dynamic config
+            formConfig.forEach(q => possibleKeys.push(q.field_key));
+
+            [...new Set(possibleKeys)].forEach(key => {
+                const el = document.getElementById(key);
+                // Map 'fname' to 'full_name' if needed for schema consistency
+                const dbKey = (key === 'fname') ? 'full_name' : key;
+                if (el) payload[dbKey] = el.value;
+            });
 
             const { error } = await db.from('applications').insert([payload]);
 
@@ -567,7 +534,7 @@
                 document.getElementById('mainForm').style.display = 'none';
                 document.getElementById('successOverlay').style.display = 'flex';
             } else {
-                alert("Ouch. Database error: " + error.message);
+                alert("Database error: " + error.message);
                 btn.innerHTML = "Try Again";
                 btn.disabled = false;
             }

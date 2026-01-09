@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connvel Applications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Applications | Connvel Admin</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
         rel="stylesheet">
@@ -13,15 +13,15 @@
         :root {
             --primary: #c95f40;
             --primary-light: #fdf2f0;
-            --bg-body: #f8f9fa;
+            --bg-body: #f3f4f6;
             --surface: #ffffff;
-            --text-heading: #1e1e2f;
-            --text-body: #5e6278;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --border-radius: 16px;
-            --shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            --text-heading: #1f2937;
+            --text-body: #4b5563;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -33,39 +33,39 @@
             display: flex;
         }
 
+        /* SIDEBAR (Responsive) */
         .sidebar {
             width: 260px;
             background: var(--surface);
-            padding: 30px;
-            border-right: 1px solid #eee;
-            height: 100vh;
-            position: fixed;
+            padding: 25px;
+            border-right: 1px solid #e5e7eb;
             display: flex;
             flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.3s;
         }
 
         .brand {
             font-family: 'Playfair Display';
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 18px;
-            border-radius: 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
             color: var(--text-heading);
             font-weight: 500;
             text-decoration: none;
-            margin-bottom: 8px;
-            transition: 0.3s;
+            margin-bottom: 5px;
+            transition: 0.2s;
         }
 
         .nav-link:hover,
@@ -74,65 +74,56 @@
             color: var(--primary);
         }
 
+        /* MAIN */
         .main {
             margin-left: 260px;
-            padding: 40px;
-            flex-grow: 1;
+            flex: 1;
+            padding: 30px;
+            width: 100%;
+            transition: margin 0.3s;
         }
 
+        /* HEADER */
         .header-sec {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        .header-sec h1 {
-            font-family: 'Playfair Display';
-            font-size: 2rem;
-            color: var(--text-heading);
-            margin: 0;
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-body);
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        .btn-back:hover {
-            color: var(--primary);
-            transform: translateX(-5px);
-        }
-
-        /* FILTERS */
+        /* TOOLBAR */
         .toolbar {
-            background: var(--surface);
+            background: white;
             padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             display: flex;
             gap: 15px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
         }
 
         .search-box {
-            flex-grow: 1;
+            flex: 1;
             position: relative;
+            min-width: 200px;
         }
 
         .search-box input {
             width: 100%;
             padding: 12px 12px 12px 40px;
-            border: 1px solid #eee;
+            border: 1px solid #e5e7eb;
             border-radius: 10px;
             font-family: 'Outfit';
-            box-sizing: border-box;
+            font-size: 1rem;
         }
 
         .search-box i {
@@ -140,36 +131,35 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #999;
+            color: #9ca3af;
         }
 
         .filter-select {
             padding: 12px;
-            border: 1px solid #eee;
+            border: 1px solid #e5e7eb;
             border-radius: 10px;
             font-family: 'Outfit';
-            cursor: pointer;
+            font-size: 0.95rem;
+            background: white;
+            flex: 1;
+            min-width: 140px;
         }
 
         /* GRID */
         .app-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 20px;
         }
 
         .card {
-            background: var(--surface);
-            padding: 25px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
             position: relative;
             overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
         }
 
         .card::before {
@@ -179,33 +169,28 @@
             top: 0;
             bottom: 0;
             width: 4px;
-            background: #eee;
         }
 
         .card[data-status="Pending"]::before {
-            background: var(--warning);
+            background: #f59e0b;
         }
 
         .card[data-status="Approved"]::before {
-            background: var(--success);
-        }
-
-        .card[data-status="Rejected"]::before {
-            background: var(--danger);
+            background: #10b981;
         }
 
         .card-head {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .u-name {
             font-family: 'Playfair Display';
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             margin: 0;
-            color: var(--text-heading);
+            color: #111;
         }
 
         .role-tag {
@@ -213,14 +198,12 @@
             background: #f3f4f6;
             padding: 2px 8px;
             border-radius: 4px;
-            color: #666;
             font-weight: 600;
-            margin-top: 4px;
-            display: inline-block;
+            color: #666;
         }
 
         .status-pill {
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
@@ -229,17 +212,12 @@
 
         .st-Pending {
             background: #fffbeb;
-            color: var(--warning);
+            color: #f59e0b;
         }
 
         .st-Approved {
-            background: #d1fae5;
-            color: var(--success);
-        }
-
-        .st-Rejected {
-            background: #fef2f2;
-            color: var(--danger);
+            background: #ecfdf5;
+            color: #10b981;
         }
 
         .details {
@@ -251,14 +229,14 @@
             align-items: center;
             gap: 10px;
             font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: #555;
+            margin-bottom: 6px;
+            color: #4b5563;
         }
 
         .d-item i {
             width: 20px;
             text-align: center;
-            color: #999;
+            color: #9ca3af;
         }
 
         .d-item a {
@@ -270,256 +248,205 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #f0f0f0;
+            border-top: 1px solid #f3f4f6;
             padding-top: 15px;
         }
 
         .icon-btn {
+            background: #fee2e2;
+            color: #ef4444;
             border: none;
-            background: none;
-            color: #999;
+            padding: 8px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-
-        .icon-btn:hover {
-            color: var(--primary);
-        }
-
-        .icon-btn.delete:hover {
-            color: var(--danger);
-        }
-
-        .main-btns {
-            display: flex;
-            gap: 8px;
         }
 
         .btn-sm {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 8px;
             border: none;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
+            margin-left: 5px;
         }
 
         .btn-ap {
             background: #ecfdf5;
-            color: var(--success);
-        }
-
-        .btn-ap:hover {
-            background: var(--success);
-            color: white;
+            color: #10b981;
         }
 
         .btn-rj {
             background: #fef2f2;
-            color: var(--danger);
+            color: #ef4444;
         }
 
-        .btn-rj:hover {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-pe {
-            background: #fffbeb;
-            color: var(--warning);
-        }
-
-        .empty-state {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 50px;
-            color: #999;
+        /* MOBILE OVERLAY */
+        .overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 50;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Stack cards */
+            .toolbar {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <nav class="sidebar">
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <nav class="sidebar" id="sidebar">
         <div class="brand"><i class="fas fa-layer-group"></i> Connvel</div>
-        <a href="admin_dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> Dashboard</a>
+        <a href="admin_dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> Overview</a>
         <a href="#" class="nav-link active"><i class="fas fa-users"></i> Applications</a>
     </nav>
 
     <main class="main">
         <div class="header-sec">
-            <h1>Applications</h1>
-            <a href="admin_dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                <h1 style="font-size:1.6rem;">Applications</h1>
+            </div>
+            <a href="admin_dashboard.html"
+                style="text-decoration:none; color:#666; font-weight:600; font-size:0.9rem;">&larr; Back</a>
         </div>
 
         <div class="toolbar">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search applications..." onkeyup="filterApps()">
+                <input type="text" id="searchInput" placeholder="Search name..." onkeyup="filterApps()">
             </div>
             <select class="filter-select" id="statusFilter" onchange="filterApps()">
                 <option value="All">All Status</option>
                 <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
             </select>
         </div>
 
         <div class="app-grid" id="appGrid">
-            <div class="empty-state" id="emptyState">
-                <i class="far fa-folder-open" style="font-size: 3rem; margin-bottom: 10px;"></i>
-                <p>No applications found.</p>
-            </div>
+            <div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">Loading...</div>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // --- SUPABASE CONFIG ---
         const SUPABASE_URL = 'https://okefeflworafgikasbzq.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc';
-        const { createClient } = supabase;
-        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.querySelector('.overlay').classList.toggle('active');
+        }
 
         let allApps = [];
 
         window.onload = function () {
-            if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
-                window.location.href = 'admin_dashboard.html'; // Redirect to login
-            } else {
-                fetchApps();
-            }
-        };
+            if (sessionStorage.getItem('adminLoggedIn') !== 'true') location.href = 'admin_dashboard.html';
+            fetchApps();
+        }
 
         async function fetchApps() {
-            try {
-                document.getElementById('appGrid').innerHTML = '<p style="padding:20px;">Loading...</p>';
-                const { data, error } = await db.from('applications').select('*').order('submitted_at', { ascending: false });
-
-                if (error) throw error;
-
-                allApps = data || [];
-                renderApps(allApps);
-
-            } catch (err) {
-                console.error(err);
-                document.getElementById('appGrid').innerHTML = '<p style="color:red">Error loading data.</p>';
-            }
+            const { data, error } = await db.from('applications').select('*').order('submitted_at', { ascending: false });
+            if (error) { document.getElementById('appGrid').innerHTML = "Error loading"; return; }
+            allApps = data;
+            renderApps(data);
         }
 
         function renderApps(list) {
             const grid = document.getElementById('appGrid');
             grid.innerHTML = '';
-
-            if (list.length === 0) {
-                grid.innerHTML = `<div class="empty-state" style="display:block;"><p>No applications found.</p></div>`;
-                return;
-            }
+            if (list.length === 0) { grid.innerHTML = '<div style="padding:40px; text-align:center; color:#999;">No applications found.</div>'; return; }
 
             list.forEach(app => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.dataset.status = app.status;
-
                 card.innerHTML = `
                     <div class="card-head">
-                        <div>
-                            <h3 class="u-name">${app.full_name}</h3>
-                            <span class="role-tag">${app.category}</span>
-                        </div>
+                        <div><h3 class="u-name">${app.full_name}</h3><span class="role-tag">${app.category}</span></div>
                         <span class="status-pill st-${app.status}" id="badge-${app.id}">${app.status}</span>
                     </div>
-
                     <div class="details">
-                        <div class="d-item"><i class="fas fa-building"></i> ${app.institution_name || 'N/A'}</div>
+                        <div class="d-item"><i class="fas fa-building"></i> ${app.institution_name || '-'}</div>
                         <div class="d-item"><i class="fab fa-whatsapp"></i> ${app.whatsapp}</div>
-                        <div class="d-item"><i class="fas fa-envelope"></i> ${app.work_email || app.personal_email || '-'}</div>
-                        <div class="d-item"><i class="fab fa-linkedin"></i> <a href="${app.linkedin_url}" target="_blank">View Profile</a></div>
+                        <div class="d-item"><i class="fab fa-linkedin"></i> <a href="${app.linkedin_url}" target="_blank">LinkedIn</a></div>
                     </div>
-
                     <div class="actions">
-                        <div>
-                             <button class="icon-btn delete" onclick="deleteApp(${app.id})"><i class="fas fa-trash"></i></button>
-                        </div>
-                        <div class="main-btns" id="btns-${app.id}">
-                            ${getButtons(app.status, app.id)}
-                        </div>
+                        <button class="icon-btn" onclick="delApp(${app.id})"><i class="fas fa-trash"></i></button>
+                        <div id="btns-${app.id}">${getBtns(app.status, app.id)}</div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        function getButtons(status, id) {
-            if (status === 'Pending') {
-                return `<button class="btn-sm btn-ap" onclick="setStatus(${id}, 'Approved')">Approve</button>
-                        <button class="btn-sm btn-rj" onclick="setStatus(${id}, 'Rejected')">Reject</button>`;
-            } else if (status === 'Approved') {
-                return `<button class="btn-sm btn-pe" onclick="setStatus(${id}, 'Pending')">Revoke</button>`;
-            } else {
-                return `<button class="btn-sm btn-pe" onclick="setStatus(${id}, 'Pending')">Re-Open</button>`;
-            }
+        function getBtns(status, id) {
+            if (status === 'Pending') return `<button class="btn-sm btn-ap" onclick="setStatus(${id}, 'Approved')">Approve</button><button class="btn-sm btn-rj" onclick="setStatus(${id}, 'Rejected')">Reject</button>`;
+            if (status === 'Approved') return `<button class="btn-sm btn-rj" onclick="setStatus(${id}, 'Pending')">Revoke</button>`;
+            return `<button class="btn-sm btn-ap" onclick="setStatus(${id}, 'Approved')">Re-Approve</button>`;
         }
 
         function filterApps() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const stat = document.getElementById('statusFilter').value;
-
-            const filtered = allApps.filter(app => {
-                const sMatch = (stat === 'All' || app.status === stat);
-                const nMatch = app.full_name.toLowerCase().includes(search);
-                return sMatch && nMatch;
-            });
-            renderApps(filtered);
+            const s = document.getElementById('searchInput').value.toLowerCase();
+            const f = document.getElementById('statusFilter').value;
+            renderApps(allApps.filter(a => (f === 'All' || a.status === f) && a.full_name.toLowerCase().includes(s)));
         }
 
-        // --- ACTIONS ---
-        async function setStatus(id, newStatus) {
-            // Optimistic UI
-            const badge = document.getElementById('badge-' + id);
-            const btns = document.getElementById('btns-' + id);
-            const card = badge.closest('.card');
-
-            const prevStatus = badge.innerText;
-            badge.className = `status-pill st-${newStatus}`;
-            badge.innerText = newStatus;
-            card.dataset.status = newStatus;
-            btns.innerHTML = `<span style="font-size:0.8rem; color:#999;">Updating...</span>`;
-
-            try {
-                const { error } = await db.from('applications').update({ status: newStatus }).eq('id', id);
-                if (error) throw error;
-
-                btns.innerHTML = getButtons(newStatus, id);
-
-                // Update local array
-                const idx = allApps.findIndex(a => a.id == id);
-                if (idx > -1) allApps[idx].status = newStatus;
-
-            } catch (e) {
-                alert("Update failed: " + e.message);
-                // Revert
-                badge.innerText = prevStatus;
-                badge.className = `status-pill st-${prevStatus}`;
+        async function setStatus(id, newS) {
+            const { error } = await db.from('applications').update({ status: newS }).eq('id', id);
+            if (!error) {
+                // Update Local UI
+                const app = allApps.find(a => a.id == id); if (app) app.status = newS;
+                document.getElementById('badge-' + id).className = `status-pill st-${newS}`;
+                document.getElementById('badge-' + id).innerText = newS;
+                document.getElementById('btns-' + id).innerHTML = getBtns(newS, id);
+                document.querySelector(`.card[data-status]`).dataset.status = newS; // Just heuristic update
             }
         }
 
-        async function deleteApp(id) {
-            if (confirm("Are you sure you want to delete this application?")) {
-                try {
-                    const { error } = await db.from('applications').delete().eq('id', id);
-                    if (error) throw error;
-
-                    // Remove from UI
-                    document.getElementById('badge-' + id).closest('.card').remove();
-                    // Remove from local array
-                    allApps = allApps.filter(a => a.id != id);
-
-                } catch (e) {
-                    alert("Delete failed: " + e.message);
-                }
+        async function delApp(id) {
+            if (confirm('Delete permanently?')) {
+                await db.from('applications').delete().eq('id', id);
+                allApps = allApps.filter(a => a.id != id);
+                renderApps(allApps);
             }
         }
     </script>

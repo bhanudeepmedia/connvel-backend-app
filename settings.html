@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Connvel</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #c95f40;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: #000;
+            color: #fff;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .brand {
+            font-family: 'Playfair Display';
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: #888;
+            font-weight: 500;
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 50px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display';
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-black {
+            background: #111;
+            color: white;
+        }
+
+        .btn-black:hover {
+            background: #333;
+        }
+
+        .btn-red {
+            background: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fee2e2;
+        }
+
+        .btn-red:hover {
+            background: #fee2e2;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div style="width:10px; height:10px; background:var(--primary); border-radius:50%;"></div> CONNVEL
+        </div>
+        <a href="admin_dashboard.html" class="nav-item"><i class="fas fa-satellite-dish" style="width:25px;"></i>
+            Mission Control</a>
+        <a href="admin_list.html" class="nav-item"><i class="fas fa-users" style="width:25px;"></i> The Tribe</a>
+        <a href="#" class="nav-item active"><i class="fas fa-sliders-h" style="width:25px;"></i> Settings</a>
+    </aside>
+
+    <main class="main">
+        <h1>Settings</h1>
+
+        <div class="card">
+            <h3>Data Management</h3>
+            <p style="color:#666; margin-bottom:20px;">Export all tribe data to a CSV file for Excel/Google Sheets.</p>
+            <button class="btn-black" onclick="exportData()"><i class="fas fa-download"></i> Export CSV</button>
+            <span id="exp-msg" style="margin-left:10px; font-size:0.9rem; color:#10b981;"></span>
+        </div>
+
+        <div class="card">
+            <h3>Session</h3>
+            <p style="color:#666; margin-bottom:20px;">Logout of this device. You will need to re-authenticate.</p>
+            <button class="btn-red" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Terminate Session</button>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://okefeflworafgikasbzq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc';
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function exportData() {
+            const btn = document.querySelector('.btn-black');
+            btn.innerText = "Generating...";
+
+            const { data } = await db.from('applications').select('*');
+            if (!data || data.length === 0) { alert('No data to export'); return; }
+
+            const headers = Object.keys(data[0]).join(',');
+            const rows = data.map(obj => Object.values(obj).map(v => `"${v}"`).join(',')).join('\n');
+            const csv = headers + '\n' + rows;
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `connvel_data_${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+
+            btn.innerHTML = '<i class="fas fa-check"></i> Exported';
+            setTimeout(() => btn.innerHTML = '<i class="fas fa-download"></i> Export CSV', 2000);
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'admin_dashboard.html';
+        }
+    </script>
+</body>
+
+</html>

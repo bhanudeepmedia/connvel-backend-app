@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Applications | Connvel Admin</title>
+    <title>The Tribe | Connvel</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
         rel="stylesheet">
@@ -12,11 +12,10 @@
     <style>
         :root {
             --primary: #c95f40;
-            --primary-light: #fdf2f0;
-            --bg-body: #f3f4f6;
+            --bg: #f8f9fa;
             --surface: #ffffff;
-            --text-heading: #1f2937;
-            --text-body: #4b5563;
+            --text: #111;
+            --border: #e5e5e5;
         }
 
         * {
@@ -26,19 +25,18 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--bg-body);
-            color: var(--text-body);
+            background: var(--bg);
             margin: 0;
             min-height: 100vh;
             display: flex;
         }
 
-        /* SIDEBAR (Responsive) */
+        /* SIDEBAR (Reused) */
         .sidebar {
-            width: 260px;
-            background: var(--surface);
-            padding: 25px;
-            border-right: 1px solid #e5e7eb;
+            width: 280px;
+            background: #000;
+            color: #fff;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -49,170 +47,189 @@
 
         .brand {
             font-family: 'Playfair Display';
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 40px;
-        }
-
-        .nav-link {
+            margin-bottom: 50px;
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 15px;
-            border-radius: 10px;
-            color: var(--text-heading);
-            font-weight: 500;
-            text-decoration: none;
-            margin-bottom: 5px;
-            transition: 0.2s;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
-            background: var(--primary-light);
-            color: var(--primary);
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: #888;
+            font-weight: 500;
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: #fff;
         }
 
         /* MAIN */
         .main {
-            margin-left: 260px;
+            margin-left: 280px;
             flex: 1;
-            padding: 30px;
-            width: 100%;
-            transition: margin 0.3s;
+            padding: 40px;
         }
 
-        /* HEADER */
-        .header-sec {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
-        .menu-btn {
+        .header h1 {
+            font-family: 'Playfair Display';
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .menu-toggle {
             display: none;
+            font-size: 1.5rem;
             background: none;
             border: none;
-            font-size: 1.5rem;
             cursor: pointer;
         }
 
-        /* TOOLBAR */
-        .toolbar {
-            background: white;
-            padding: 15px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            flex: 1;
-            position: relative;
-            min-width: 200px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px 12px 12px 40px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            font-family: 'Outfit';
-            font-size: 1rem;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-        }
-
-        .filter-select {
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            font-family: 'Outfit';
-            font-size: 0.95rem;
-            background: white;
-            flex: 1;
-            min-width: 140px;
-        }
-
-        /* GRID */
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
+        /* FILTERS BAR */
+        .filter-bar {
             background: white;
             padding: 20px;
             border-radius: 16px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .search-wrap {
+            flex: 2;
             position: relative;
+            min-width: 200px;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Outfit';
+        }
+
+        .filter-select {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Outfit';
+            background: white;
+            cursor: pointer;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+            transition: 0.2s;
             overflow: hidden;
         }
 
-        .card::before {
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Status Stripe */
+        .card::after {
             content: '';
             position: absolute;
-            left: 0;
             top: 0;
+            left: 0;
             bottom: 0;
-            width: 4px;
+            width: 5px;
         }
 
-        .card[data-status="Pending"]::before {
-            background: #f59e0b;
+        .card[data-status="Pending"]::after {
+            background: #ea580c;
         }
 
-        .card[data-status="Approved"]::before {
+        .card[data-status="Approved"]::after {
             background: #10b981;
         }
 
-        .card-head {
+        .c-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .u-name {
             font-family: 'Playfair Display';
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             margin: 0;
+            font-weight: 700;
             color: #111;
         }
 
-        .role-tag {
-            font-size: 0.75rem;
+        .u-cat {
             background: #f3f4f6;
-            padding: 2px 8px;
+            font-size: 0.7rem;
+            padding: 3px 8px;
             border-radius: 4px;
             font-weight: 600;
-            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .status-pill {
-            padding: 4px 10px;
+        .stats-pill {
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 800;
             text-transform: uppercase;
         }
 
         .st-Pending {
-            background: #fffbeb;
-            color: #f59e0b;
+            background: #fff7ed;
+            color: #ea580c;
         }
 
         .st-Approved {
@@ -222,66 +239,63 @@
 
         .details {
             margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #555;
         }
 
-        .d-item {
+        .d-row {
             display: flex;
-            align-items: center;
             gap: 10px;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            color: #4b5563;
+            margin-bottom: 8px;
+            align-items: center;
         }
 
-        .d-item i {
+        .d-icon {
+            color: #999;
             width: 20px;
             text-align: center;
-            color: #9ca3af;
         }
 
-        .d-item a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .actions {
+        .action-bar {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #f3f4f6;
-            padding-top: 15px;
         }
 
-        .icon-btn {
-            background: #fee2e2;
-            color: #ef4444;
-            border: none;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .btn-sm {
+        .btn-act {
             padding: 8px 16px;
             border-radius: 8px;
-            border: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            margin-left: 5px;
+            border: none;
         }
 
-        .btn-ap {
+        .btn-green {
             background: #ecfdf5;
             color: #10b981;
         }
 
-        .btn-rj {
+        .btn-red {
             background: #fef2f2;
             color: #ef4444;
         }
 
-        /* MOBILE OVERLAY */
+        .btn-icon {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-icon:hover {
+            color: #ef4444;
+        }
+
+        /* RESPONSIVE */
         .overlay {
             display: none;
             position: fixed;
@@ -289,39 +303,34 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 50;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 90;
         }
 
-        .overlay.active {
-            display: block;
-        }
-
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .sidebar {
                 transform: translateX(-100%);
+                width: 260px;
             }
 
             .sidebar.open {
                 transform: translateX(0);
-                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
             }
 
-            .main {
-                margin-left: 0;
-                padding: 20px;
-            }
-
-            .menu-btn {
+            .menu-toggle {
                 display: block;
             }
 
-            .app-grid {
+            .main {
+                margin: 0;
+                padding: 20px;
+            }
+
+            .grid {
                 grid-template-columns: 1fr;
             }
 
-            /* Stack cards */
-            .toolbar {
+            .filter-bar {
                 flex-direction: column;
             }
         }
@@ -332,36 +341,51 @@
 
     <div class="overlay" onclick="toggleMenu()"></div>
 
-    <nav class="sidebar" id="sidebar">
-        <div class="brand"><i class="fas fa-layer-group"></i> Connvel</div>
-        <a href="admin_dashboard.html" class="nav-link"><i class="fas fa-chart-pie"></i> Overview</a>
-        <a href="#" class="nav-link active"><i class="fas fa-users"></i> Applications</a>
-    </nav>
+    <aside class="sidebar" id="sidebar">
+        <div class="brand">
+            <div style="width:10px; height:10px; background:var(--primary); border-radius:50%;"></div> CONNVEL
+        </div>
+        <a href="admin_dashboard.html" class="nav-item"><i class="fas fa-satellite-dish" style="width:25px;"></i>
+            Mission Control</a>
+        <a href="#" class="nav-item active"><i class="fas fa-users" style="width:25px;"></i> The Tribe</a>
+        <a href="settings.html" class="nav-item"><i class="fas fa-sliders-h" style="width:25px;"></i> Settings</a>
+    </aside>
 
     <main class="main">
-        <div class="header-sec">
-            <div style="display:flex; align-items:center; gap:15px;">
-                <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-                <h1 style="font-size:1.6rem;">Applications</h1>
+        <div class="header">
+            <div>
+                <h1>The Tribe</h1>
+                <p style="color:#888; margin:5px 0 0 0;">Managing the ecosystem.</p>
             </div>
-            <a href="admin_dashboard.html"
-                style="text-decoration:none; color:#666; font-weight:600; font-size:0.9rem;">&larr; Back</a>
+            <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
         </div>
 
-        <div class="toolbar">
-            <div class="search-box">
+        <div class="filter-bar">
+            <div class="search-wrap">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search name..." onkeyup="filterApps()">
+                <input type="text" class="search-input" id="search" placeholder="Find by name..." onkeyup="filter()">
             </div>
-            <select class="filter-select" id="statusFilter" onchange="filterApps()">
+            <select class="filter-select" id="f_status" onchange="filter()">
                 <option value="All">All Status</option>
                 <option value="Pending">Pending</option>
                 <option value="Approved">Approved</option>
             </select>
+            <select class="filter-select" id="f_gender" onchange="filter()">
+                <option value="All">All Genders</option>
+                <option value="Male">Him</option>
+                <option value="Female">Her</option>
+                <option value="Other">Them</option>
+            </select>
+            <select class="filter-select" id="s_sort" onchange="filter()">
+                <option value="Newest">Newest First</option>
+                <option value="Oldest">Oldest First</option>
+                <option value="AgeAsc">Age: Low to High</option>
+                <option value="AgeDesc">Age: High to Low</option>
+            </select>
         </div>
 
-        <div class="app-grid" id="appGrid">
-            <div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">Loading...</div>
+        <div class="grid" id="grid">
+            <div style="grid-column:1/-1; text-align:center; padding:50px; color:#aaa;">Loading data...</div>
         </div>
     </main>
 
@@ -371,84 +395,109 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc';
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        let dataStore = [];
+
+        // UI
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('open');
-            document.querySelector('.overlay').classList.toggle('active');
+            document.querySelector('.overlay').style.display = document.querySelector('.overlay').style.display === 'block' ? 'none' : 'block';
         }
 
-        let allApps = [];
+        // INIT
+        window.onload = async function () {
+            if (!sessionStorage.getItem('cv_admin')) location.href = 'admin_dashboard.html';
 
-        window.onload = function () {
-            if (sessionStorage.getItem('adminLoggedIn') !== 'true') location.href = 'admin_dashboard.html';
-            fetchApps();
+            const { data } = await db.from('applications').select('*');
+            if (data) {
+                dataStore = data;
+                filter();
+            }
         }
 
-        async function fetchApps() {
-            const { data, error } = await db.from('applications').select('*').order('submitted_at', { ascending: false });
-            if (error) { document.getElementById('appGrid').innerHTML = "Error loading"; return; }
-            allApps = data;
-            renderApps(data);
+        function filter() {
+            const s = document.getElementById('search').value.toLowerCase();
+            const stat = document.getElementById('f_status').value;
+            const gen = document.getElementById('f_gender').value;
+            const sort = document.getElementById('s_sort').value;
+
+            let res = dataStore.filter(i => {
+                const matchName = i.full_name?.toLowerCase().includes(s);
+                const matchStat = stat === 'All' || i.status === stat;
+                const matchGen = gen === 'All' || i.gender === gen;
+                return matchName && matchStat && matchGen;
+            });
+
+            // Sorting
+            if (sort === 'Newest') res.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
+            if (sort === 'Oldest') res.sort((a, b) => new Date(a.submitted_at) - new Date(b.submitted_at));
+            if (sort === 'AgeAsc') res.sort((a, b) => (parseInt(a.age) || 0) - (parseInt(b.age) || 0));
+            if (sort === 'AgeDesc') res.sort((a, b) => (parseInt(b.age) || 0) - (parseInt(a.age) || 0));
+
+            render(res);
         }
 
-        function renderApps(list) {
-            const grid = document.getElementById('appGrid');
+        function render(list) {
+            const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            if (list.length === 0) { grid.innerHTML = '<div style="padding:40px; text-align:center; color:#999;">No applications found.</div>'; return; }
 
-            list.forEach(app => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.dataset.status = app.status;
-                card.innerHTML = `
-                    <div class="card-head">
-                        <div><h3 class="u-name">${app.full_name}</h3><span class="role-tag">${app.category}</span></div>
-                        <span class="status-pill st-${app.status}" id="badge-${app.id}">${app.status}</span>
-                    </div>
-                    <div class="details">
-                        <div class="d-item"><i class="fas fa-building"></i> ${app.institution_name || '-'}</div>
-                        <div class="d-item"><i class="fab fa-whatsapp"></i> ${app.whatsapp}</div>
-                        <div class="d-item"><i class="fab fa-linkedin"></i> <a href="${app.linkedin_url}" target="_blank">LinkedIn</a></div>
-                    </div>
-                    <div class="actions">
-                        <button class="icon-btn" onclick="delApp(${app.id})"><i class="fas fa-trash"></i></button>
-                        <div id="btns-${app.id}">${getBtns(app.status, app.id)}</div>
+            if (list.length === 0) {
+                grid.innerHTML = `<div style="text-align:center; grid-column:1/-1; color:#aaa; padding:50px;">No humans found.</div>`;
+                return;
+            }
+
+            list.forEach(i => {
+                const age = i.age ? `(${i.age})` : '';
+                grid.innerHTML += `
+                    <div class="card" data-status="${i.status}" id="c-${i.id}">
+                        <div class="c-header">
+                            <div>
+                                <h3 class="u-name">${i.full_name || 'Unknown'} <span style="font-size:0.9rem; font-weight:400; color:#888;">${age}</span></h3>
+                                <span class="u-cat">${i.category} • ${i.gender}</span>
+                            </div>
+                            <div class="stats-pill st-${i.status}" id="s-${i.id}">${i.status}</div>
+                        </div>
+                        <div class="details">
+                            <div class="d-row"><div class="d-icon"><i class="fas fa-briefcase"></i></div> ${i.role_title || '-'} @ ${i.institution_name || '-'}</div>
+                            <div class="d-row"><div class="d-icon"><i class="fab fa-whatsapp"></i></div> ${i.whatsapp}</div>
+                            <div class="d-row"><div class="d-icon"><i class="fab fa-linkedin"></i></div> <a href="${i.linkedin_url}" target="_blank" style="color:var(--primary);">LinkedIn Profile</a></div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn-icon" onclick="del(${i.id})"><i class="fas fa-trash"></i></button>
+                            ${getActions(i.status, i.id)}
+                        </div>
                     </div>
                 `;
-                grid.appendChild(card);
             });
         }
 
-        function getBtns(status, id) {
-            if (status === 'Pending') return `<button class="btn-sm btn-ap" onclick="setStatus(${id}, 'Approved')">Approve</button><button class="btn-sm btn-rj" onclick="setStatus(${id}, 'Rejected')">Reject</button>`;
-            if (status === 'Approved') return `<button class="btn-sm btn-rj" onclick="setStatus(${id}, 'Pending')">Revoke</button>`;
-            return `<button class="btn-sm btn-ap" onclick="setStatus(${id}, 'Approved')">Re-Approve</button>`;
+        function getActions(stat, id) {
+            if (stat === 'Pending') return `<div id="act-${id}"><button class="btn-act btn-green" onclick="upd(${id}, 'Approved')">Approve</button> <button class="btn-act btn-red" onclick="upd(${id}, 'Rejected')">Reject</button></div>`;
+            if (stat === 'Approved') return `<div id="act-${id}"><button class="btn-act btn-red" onclick="upd(${id}, 'Pending')">Revoke</button></div>`;
+            return `<div id="act-${id}"><button class="btn-act btn-green" onclick="upd(${id}, 'Approved')">Re-Approve</button></div>`;
         }
 
-        function filterApps() {
-            const s = document.getElementById('searchInput').value.toLowerCase();
-            const f = document.getElementById('statusFilter').value;
-            renderApps(allApps.filter(a => (f === 'All' || a.status === f) && a.full_name.toLowerCase().includes(s)));
+        async function upd(id, s) {
+            // Optimistic
+            const idx = dataStore.findIndex(x => x.id == id);
+            if (idx > -1) dataStore[idx].status = s;
+
+            document.getElementById('s-' + id).className = `stats-pill st-${s}`;
+            document.getElementById('s-' + id).innerText = s;
+            document.getElementById('c-' + id).dataset.status = s;
+            document.getElementById('act-' + id).innerHTML = `<span style="font-size:0.8rem;">Updating...</span>`;
+
+            await db.from('applications').update({ status: s }).eq('id', id);
+            document.getElementById('act-' + id).innerHTML = getActions(s, id); // restore btns
         }
 
-        async function setStatus(id, newS) {
-            const { error } = await db.from('applications').update({ status: newS }).eq('id', id);
-            if (!error) {
-                // Update Local UI
-                const app = allApps.find(a => a.id == id); if (app) app.status = newS;
-                document.getElementById('badge-' + id).className = `status-pill st-${newS}`;
-                document.getElementById('badge-' + id).innerText = newS;
-                document.getElementById('btns-' + id).innerHTML = getBtns(newS, id);
-                document.querySelector(`.card[data-status]`).dataset.status = newS; // Just heuristic update
-            }
-        }
-
-        async function delApp(id) {
-            if (confirm('Delete permanently?')) {
+        async function del(id) {
+            if (confirm('Delete this human?')) {
                 await db.from('applications').delete().eq('id', id);
-                allApps = allApps.filter(a => a.id != id);
-                renderApps(allApps);
+                dataStore = dataStore.filter(x => x.id != id);
+                filter();
             }
         }
+
     </script>
 </body>
 

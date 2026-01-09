@@ -8,17 +8,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
         rel="stylesheet">
-
     <style>
         :root {
             --primary: #c95f40;
-            /* The Terracotta color */
-            --primary-hover: #a84b30;
             --bg: #FDFDFD;
-            --text-main: #1a1a1a;
-            --text-muted: #666;
+            --text: #1a1a1a;
             --border: #e0e0e0;
-            --card-bg: #ffffff;
         }
 
         * {
@@ -29,29 +24,23 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden;
-            /* Prevent scroll during transitions */
         }
 
-        /* --- Container --- */
         .app-container {
             width: 100%;
             max-width: 600px;
-            background: var(--card-bg);
-            padding: 0;
+            background: #fff;
             position: relative;
-            transition: opacity 0.5s ease;
-            z-index: 1;
         }
 
-        /* --- NEW: Success & Lock Overlay Styles --- */
+        /* Overlays */
         #successOverlay,
         #alreadySubmittedOverlay {
             position: fixed;
@@ -60,11 +49,9 @@
             width: 100%;
             height: 100%;
             background: #0a0a0a;
-            /* Premium Dark Background */
             color: white;
             z-index: 999;
             display: none;
-            /* Hidden by default */
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -72,141 +59,21 @@
             padding: 20px;
         }
 
-        /* Animation: Circle Loader */
-        .circle-loader {
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-left-color: var(--primary);
-            animation: loader-spin 1.2s infinite linear;
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            margin-bottom: 30px;
-        }
-
-        .load-complete {
-            -webkit-animation: none;
-            animation: none;
-            border-color: var(--primary);
-            transition: border 500ms ease-out;
-        }
-
-        .checkmark {
-            display: none;
-        }
-
-        .checkmark.draw {
-            display: block;
-        }
-
-        .checkmark:after {
-            opacity: 1;
-            height: 40px;
-            width: 20px;
-            transform-origin: left top;
-            border-right: 3px solid #fff;
-            border-top: 3px solid #fff;
-            content: '';
-            left: 20px;
-            top: 40px;
-            position: absolute;
-            animation-duration: 800ms;
-            animation-timing-function: ease;
-            animation-name: checkmark;
-            transform: scaleX(-1) rotate(135deg);
-        }
-
-        @keyframes loader-spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes checkmark {
-            0% {
-                height: 0;
-                width: 0;
-                opacity: 1;
-            }
-
-            20% {
-                height: 0;
-                width: 20px;
-                opacity: 1;
-            }
-
-            40% {
-                height: 40px;
-                width: 20px;
-                opacity: 1;
-            }
-
-            100% {
-                height: 40px;
-                width: 20px;
-                opacity: 1;
-            }
-        }
-
-        /* Typography for Success Screens */
-        .success-title {
-            font-family: 'Playfair Display';
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .success-sub {
-            font-family: 'Inter';
-            font-size: 1rem;
-            color: #888;
-            margin-bottom: 30px;
-            max-width: 400px;
-            line-height: 1.6;
-        }
-
-        .btn-home {
-            background: transparent;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 15px 40px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-home:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* --- Existing Styles Preserved --- */
-        .header-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
+        /* Typography */
         h1 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Playfair Display';
             font-size: 2.2rem;
             margin-bottom: 10px;
-            color: #000;
         }
 
         .subtitle {
-            color: var(--text-muted);
+            color: #666;
             font-size: 0.95rem;
             line-height: 1.5;
-            max-width: 80%;
-            margin: 0 auto;
+            margin-bottom: 30px;
         }
 
+        /* Form Steps */
         .step {
             display: none;
             animation: fadeIn 0.4s ease;
@@ -228,6 +95,7 @@
             }
         }
 
+        /* Inputs */
         .form-group {
             margin-bottom: 20px;
         }
@@ -250,32 +118,44 @@
             font-size: 1rem;
             border: 1px solid var(--border);
             border-radius: 8px;
-            background: #fff;
             outline: none;
-            transition: border 0.2s;
-            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
+            font-family: 'Inter';
         }
 
         input:focus {
             border-color: var(--primary);
         }
 
-        .radio-group {
-            display: flex;
-            gap: 20px;
-        }
-
-        .radio-item label {
-            text-transform: none;
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
             font-size: 1rem;
-            color: var(--text-main);
-            font-weight: 400;
+            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-top: 20px;
+            transition: 0.2s;
         }
 
+        .btn-primary:hover {
+            background: #a84b30;
+        }
+
+        .btn-back {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* Categories */
         .category-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -291,57 +171,19 @@
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .cat-option:hover {
-            background: #f5f5f5;
         }
 
         .cat-option.selected {
             background: #111;
-            color: #fff;
-            border-color: #111;
-        }
-
-        .btn-primary {
-            width: 100%;
-            background-color: var(--primary);
             color: white;
-            border: none;
-            padding: 18px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 20px;
-            transition: background 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-back {
-            background: none;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            margin-right: 10px;
-            width: auto;
-            border-radius: 50px;
-            padding: 15px 30px;
+            border-color: #111;
         }
 
         .action-row {
             display: flex;
+            gap: 10px;
             margin-top: 20px;
-        }
-
-        .action-row .btn-primary {
-            margin-top: 0;
-            flex: 1;
+            align-items: center;
         }
 
         .review-card {
@@ -350,33 +192,6 @@
             padding: 30px;
             border-radius: 16px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-        }
-
-        .review-header h2 {
-            font-family: 'Playfair Display';
-            font-size: 1.5rem;
-            color: #fff;
-            margin: 0;
-        }
-
-        .review-badge {
-            background: #222;
-            color: #4CAF50;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            border: 1px solid #333;
         }
 
         .review-row {
@@ -385,448 +200,252 @@
             margin-bottom: 15px;
         }
 
-        .review-col {
-            width: 48%;
-        }
-
         .review-label {
             color: #888;
             font-size: 0.7rem;
             text-transform: uppercase;
-            margin-bottom: 5px;
         }
 
-        .review-val {
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .terms-box {
-            background: #f9f9f9;
-            border: 1px solid #eee;
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            font-size: 0.85rem;
-            color: #555;
+        /* Spinner */
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
             margin-bottom: 20px;
         }
 
-        .terms-box input {
-            width: auto;
-            margin-top: 3px;
-        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-        .hidden {
-            display: none;
-        }
-
-        .input-group {
-            display: flex;
-        }
-
-        .prefix {
-            background: #f0f0f0;
-            padding: 16px;
-            border: 1px solid var(--border);
-            border-right: 0;
-            border-radius: 8px 0 0 8px;
-            color: #555;
-        }
-
-        .input-group input {
-            border-radius: 0 8px 8px 0;
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- SUCCESS OVERLAY -->
     <div id="successOverlay">
-        <div class="circle-loader load-complete">
-            <div class="checkmark draw"></div>
-        </div>
-        <h1 class="success-title">Welcome to the Tribe.</h1>
-        <p class="success-sub">Your dossier has been securely logged in our archives. We will review your profile and
-            initiate contact via WhatsApp shortly.</p>
-        <div style="font-size: 0.8rem; color: #444; margin-top: 20px;">REF ID: <span id="refId">...</span></div>
+        <div class="loader"
+            style="border-top-color:#10b981; animation:none; border: 3px solid #10b981; display:flex; justify-content:center; align-items:center; font-size:2rem;">
+            ✓</div>
+        <h1 style="color:white; font-size:2rem;">Welcome to the Tribe.</h1>
+        <p style="color:#aaa; max-width:400px; margin-top:10px;">Your application has been logged. We will review your
+            profile shortly.</p>
+        <button class="btn-back" style="color:white; border-color:#333; margin-top:30px;"
+            onclick="location.reload()">Return Home</button>
     </div>
 
+    <!-- ALREADY SUBMITTED OVERLAY -->
     <div id="alreadySubmittedOverlay">
-        <div style="font-size: 4rem; color: var(--primary); margin-bottom: 20px;">★</div>
-        <h1 class="success-title">You're Already In.</h1>
-        <p class="success-sub">We have detected an existing application from this device or contact details. Sit tight,
-            we are processing your request.</p>
-        <button class="btn-home" onclick="location.reload()">Refresh Status</button>
+        <h1 style="color:white;">You're Already In.</h1>
+        <p style="color:#aaa;">We have already received your application.</p>
     </div>
 
     <form id="mainForm" class="app-container" onsubmit="return false;">
 
+        <!-- STEP 1 -->
         <div class="step active" id="step1">
-            <div class="header-section">
-                <span
-                    style="background:#fcece8; color:var(--primary); padding:5px 10px; border-radius:20px; font-size:0.7rem; font-weight:700; letter-spacing:1px;">JOIN
-                    THE INNER CIRCLE</span>
-                <h1 style="margin-top:15px;">Apply for the Tribe</h1>
-                <p class="subtitle">We don't just sell tickets. We curate connections. Tell us your story.</p>
-            </div>
+            <span
+                style="background:#fcece8; color:var(--primary); padding:5px 10px; border-radius:20px; font-size:0.7rem; font-weight:bold;">JOIN
+                THE TRIBE</span>
+            <h1 style="margin-top:15px;">Who are you?</h1>
+            <p class="subtitle">Tell us your story.</p>
 
-            <h3 style="font-family:'Playfair Display'; margin-bottom:20px;">Who are you?</h3>
-
-            <div class="form-group">
-                <label>Full Legal Name</label>
-                <input type="text" id="fname" placeholder="e.g. Adarsh Kusam">
-            </div>
-
-            <div class="form-group">
-                <label>Age</label>
-                <input type="number" id="age" placeholder="Your age">
-            </div>
+            <div class="form-group"><label>Full Name</label><input type="text" id="fname" placeholder="Your Name"></div>
+            <div class="form-group"><label>Age</label><input type="number" id="age" placeholder="24"></div>
 
             <div class="form-group">
                 <label>Gender</label>
-                <div class="radio-group">
-                    <div class="radio-item"><label><input type="radio" name="gender" value="Male" checked> Male</label>
-                    </div>
-                    <div class="radio-item"><label><input type="radio" name="gender" value="Female"> Female</label>
-                    </div>
-                    <div class="radio-item"><label><input type="radio" name="gender" value="Other"> Prefer Not to
-                            Say</label></div>
+                <div style="display:flex; gap:20px;">
+                    <label style="text-transform:none; font-weight:400;"><input type="radio" name="gender" value="Male"
+                            checked> Male</label>
+                    <label style="text-transform:none; font-weight:400;"><input type="radio" name="gender"
+                            value="Female"> Female</label>
                 </div>
             </div>
 
-            <button class="btn-primary" onclick="nextStep(2)">Digital Presence &rarr;</button>
+            <button class="btn-primary" onclick="nextStep(2)">Next Step &rarr;</button>
         </div>
 
+        <!-- STEP 2 -->
         <div class="step" id="step2">
-            <div class="header-section">
-                <h1>What keeps you busy?</h1>
-                <p class="subtitle">I am currently a...</p>
-            </div>
+            <h1>What do you do?</h1>
+            <p class="subtitle">I am currently a...</p>
 
             <div class="category-grid">
                 <div class="cat-option selected" onclick="selectCategory('Student', this)">Student</div>
-                <div class="cat-option" onclick="selectCategory('Professional', this)">Working Professional</div>
+                <div class="cat-option" onclick="selectCategory('Professional', this)">Professional</div>
                 <div class="cat-option" onclick="selectCategory('Business', this)">Business Owner</div>
             </div>
             <input type="hidden" id="category" value="Student">
 
             <div id="dynamicFields">
-                <div id="student-view">
-                    <div class="form-group">
-                        <label>University / Institute</label>
-                        <input type="text" id="d_inst" placeholder="Where are you studying?">
-                    </div>
-                    <div class="action-row" style="gap:10px; margin-top:0;">
-                        <div class="form-group" style="flex:1;">
-                            <label>Degree & Major</label>
-                            <input type="text" id="d_role" placeholder="e.g. B.Tech CSE">
-                        </div>
-                        <div class="form-group" style="flex:1;">
-                            <label>Year</label>
-                            <input type="text" id="d_extra" placeholder="e.g. 3rd Year">
-                        </div>
-                    </div>
+                <div class="form-group"><label id="lbl-inst">University</label><input type="text" id="d_inst"></div>
+                <div class="action-row" style="margin-top:0;">
+                    <div class="form-group" style="flex:1;"><label id="lbl-role">Degree</label><input type="text"
+                            id="d_role"></div>
+                    <div class="form-group" style="flex:1;"><label id="lbl-extra">Year</label><input type="text"
+                            id="d_extra"></div>
                 </div>
             </div>
 
             <div class="action-row">
                 <button class="btn-back" onclick="prevStep(1)">Back</button>
-                <button class="btn-primary" onclick="nextStep(3)">Contact Info &rarr;</button>
+                <div style="flex:1;"><button class="btn-primary" style="margin-top:0;" onclick="nextStep(3)">Next
+                        &rarr;</button></div>
             </div>
         </div>
 
+        <!-- STEP 3 -->
         <div class="step" id="step3">
-            <div class="header-section">
-                <h1>Stay in the Loop</h1>
-                <p class="subtitle">How can we reach you regarding the event?</p>
-            </div>
+            <h1>Contact Info</h1>
+            <p class="subtitle">Where can we reach you?</p>
 
-            <div class="form-group">
-                <label>WhatsApp Number</label>
-                <div class="input-group">
-                    <span class="prefix">+91</span>
-                    <input type="number" id="whatsapp" placeholder="98765 43210">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Work Email</label>
-                <input type="email" id="w_email" placeholder="work@company.com">
-            </div>
-
-            <div class="form-group">
-                <label>Personal Email</label>
-                <input type="email" id="p_email" placeholder="hello@gmail.com">
-            </div>
-
-            <div class="form-group">
-                <label>LinkedIn Profile</label>
-                <input type="text" id="linkedin" placeholder="linkedin.com/in/username">
-            </div>
-
-            <div class="form-group">
-                <label>Social Handles (IG/Twitter)</label>
-                <input type="text" id="social" placeholder="@yourhandle">
-            </div>
+            <div class="form-group"><label>WhatsApp Number</label><input type="number" id="whatsapp"
+                    placeholder="9876543210"></div>
+            <div class="form-group"><label>Work Email</label><input type="email" id="w_email"></div>
+            <div class="form-group"><label>Personal Email</label><input type="email" id="p_email"></div>
+            <div class="form-group"><label>LinkedIn URL</label><input type="text" id="linkedin"></div>
+            <div class="form-group"><label>Social Handle</label><input type="text" id="social"></div>
 
             <div class="action-row">
                 <button class="btn-back" onclick="prevStep(2)">Back</button>
-                <button class="btn-primary" onclick="prepareReview()">Proceed to Review &rarr;</button>
+                <div style="flex:1;"><button class="btn-primary" style="margin-top:0;" onclick="prepareReview()">Review
+                        &rarr;</button></div>
             </div>
         </div>
 
+        <!-- STEP 4 -->
         <div class="step" id="step4">
-
-            <div style="text-align:center; margin-bottom:20px;">
-                <div style="font-size:3rem; color:var(--primary); margin-bottom:10px;">&#10003;</div>
-                <h1 style="font-size:1.8rem;">Vibe Log Created</h1>
-                <p class="subtitle">We've successfully generated your application dossier. Review below before
-                    finalizing.</p>
-            </div>
-
+            <h1>Review & Submit</h1>
             <div class="review-card">
-                <div class="review-header">
-                    <h2>Tribe Application</h2>
-                    <span class="review-badge">DATA VERIFIED LOCALLY</span>
-                </div>
-
                 <div class="review-row">
-                    <div class="review-col">
-                        <div class="review-label">Full Name</div>
-                        <div class="review-val" id="r_name">--</div>
-                    </div>
-                    <div class="review-col">
-                        <div class="review-label">Category</div>
-                        <div class="review-val" id="r_cat">--</div>
-                    </div>
+                    <div>Name</div>
+                    <div id="r_name" style="font-weight:bold;">-</div>
                 </div>
-
                 <div class="review-row">
-                    <div class="review-col">
-                        <div class="review-label">Primary Role</div>
-                        <div class="review-val" id="r_role">--</div>
-                    </div>
-                    <div class="review-col">
-                        <div class="review-label">Organization</div>
-                        <div class="review-val" id="r_inst">--</div>
-                    </div>
+                    <div>Role</div>
+                    <div id="r_role">-</div>
                 </div>
-
-                <div style="border-top:1px solid #333; margin:15px 0;"></div>
-
                 <div class="review-row">
-                    <div class="review-col">
-                        <div class="review-label">WhatsApp</div>
-                        <div class="review-val" id="r_wa">--</div>
-                    </div>
-                    <div class="review-col">
-                        <div class="review-label">LinkedIn</div>
-                        <div class="review-val" style="font-size:0.8rem; word-break:break-all;" id="r_li">--</div>
-                    </div>
+                    <div>WhatsApp</div>
+                    <div id="r_wa">-</div>
                 </div>
-
-                <div class="review-row">
-                    <div class="review-col" style="width:100%">
-                        <div class="review-label">Emails</div>
-                        <div class="review-val" style="font-size:0.8rem;" id="r_emails">--</div>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="terms-box">
-                <input type="checkbox" id="terms">
-                <span>I have read and agree to the <a href="terms.pdf" target="_blank"
-                        style="text-decoration: underline; font-weight: bold; color: inherit; cursor: pointer;">Terms
-                        and Conditions</a> of CONNVEL. I acknowledge that my data will be used to process my
-                    application.</span>
+            <div style="margin-bottom:20px; font-size:0.8rem; color:#666;">
+                <input type="checkbox" id="terms"> I agree to the <a href="#">Terms & Conditions</a>.
             </div>
 
             <div class="action-row">
-                <button class="btn-back" onclick="prevStep(3)">Edit Details</button>
-                <button class="btn-primary" onclick="submitFinal()">Confirm & Join &nearr;</button>
+                <button class="btn-back" onclick="prevStep(3)">Edit</button>
+                <div style="flex:1;"><button class="btn-primary" onclick="submitFinal()" style="margin-top:0;">Submit
+                        Application</button></div>
             </div>
         </div>
-
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // --- 0. NEW: CHECK FOR EXISTING SUBMISSION ON PAGE LOAD ---
-        window.onload = function () {
-            if (localStorage.getItem('connvel_app_submitted') === 'true') {
-                document.getElementById('mainForm').style.display = 'none';
-                document.getElementById('alreadySubmittedOverlay').style.display = 'flex';
-            }
-        };
+        // --- SUPABASE CONFIG ---
+        const SUPABASE_URL = 'https://okefeflworafgikasbzq.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc';
+        const { createClient } = supabase;
+        const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // --- Logic for Dynamic Labels based on Category ---
-        const fieldConfigs = {
-            'Student': { inst: 'University / Institute', role: 'Degree & Major', extra: 'Year of Study' },
-            'Professional': { inst: 'Current Company', role: 'Job Role', extra: 'Industry / Niche' },
-            'Business': { inst: 'Business Name', role: 'Primary Role (CEO/Founder)', extra: 'Industry' }
-        };
-
-        function selectCategory(cat, el) {
-            // Visual Selection
-            document.querySelectorAll('.cat-option').forEach(e => e.classList.remove('selected'));
-            el.classList.add('selected');
-
-            // Update Hidden Input
-            document.getElementById('category').value = cat;
-
-            // Update Labels/Placeholders dynamically
-            const config = fieldConfigs[cat];
-            const container = document.getElementById('student-view'); // Reusing this container
-
-            // Use HTML injection to change labels quickly
-            container.innerHTML = `
-            <div class="form-group">
-                <label>${config.inst}</label>
-                <input type="text" id="d_inst" placeholder="Enter details...">
-            </div>
-            <div class="action-row" style="gap:10px; margin-top:0;">
-                <div class="form-group" style="flex:1;">
-                    <label>${config.role}</label>
-                    <input type="text" id="d_role" placeholder="Enter details...">
-                </div>
-                <div class="form-group" style="flex:1;">
-                    <label>${config.extra}</label>
-                    <input type="text" id="d_extra" placeholder="...">
-                </div>
-            </div>
-        `;
+        // --- CHECK LOCAL STORAGE ---
+        if (localStorage.getItem('connvel_submitted') === 'true') {
+            document.getElementById('mainForm').style.display = 'none';
+            document.getElementById('alreadySubmittedOverlay').style.display = 'flex';
         }
 
-        // --- Navigation Logic ---
+        // --- NAVIGATION ---
         function nextStep(n) {
-            // Simple validation check (expand as needed)
-            if (n === 2 && document.getElementById('fname').value === "") return alert("Name is required");
-            if (n === 3 && document.getElementById('d_inst').value === "") return alert("Please fill details");
+            // Validation
+            if (n === 2 && !document.getElementById('fname').value) return alert("Name is required");
 
-            showStep(n);
-        }
-
-        function prevStep(n) {
-            showStep(n);
-        }
-
-        function showStep(n) {
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + n).classList.add('active');
         }
 
-        // --- Review Page Population ---
+        function prevStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+        }
+
+        // --- DYNAMIC LABELS ---
+        const configs = {
+            'Student': ['University', 'Degree', 'Year'],
+            'Professional': ['Company', 'Job Role', 'Industry'],
+            'Business': ['Business Name', 'Your Role', 'Industry']
+        };
+
+        function selectCategory(cat, el) {
+            document.querySelectorAll('.cat-option').forEach(e => e.classList.remove('selected'));
+            el.classList.add('selected');
+            document.getElementById('category').value = cat;
+
+            const [l1, l2, l3] = configs[cat];
+            document.getElementById('lbl-inst').innerText = l1;
+            document.getElementById('lbl-role').innerText = l2;
+            document.getElementById('lbl-extra').innerText = l3;
+        }
+
         function prepareReview() {
-            // Gather data
-            const cat = document.getElementById('category').value;
-            const fname = document.getElementById('fname').value;
-            const role = document.getElementById('d_role').value;
-            const inst = document.getElementById('d_inst').value;
-            const wa = document.getElementById('whatsapp').value;
-            const li = document.getElementById('linkedin').value;
-            const w_em = document.getElementById('w_email').value;
-            const p_em = document.getElementById('p_email').value;
-
-            // Populate Review Card
-            document.getElementById('r_name').innerText = fname;
-            document.getElementById('r_cat').innerText = cat;
-            document.getElementById('r_role').innerText = role;
-            document.getElementById('r_inst').innerText = inst;
-            document.getElementById('r_wa').innerText = "+91 " + wa;
-            document.getElementById('r_li').innerText = li || "N/A";
-            document.getElementById('r_emails').innerText = (w_em || "-") + " | " + (p_em || "-");
-
+            document.getElementById('r_name').innerText = document.getElementById('fname').value;
+            document.getElementById('r_role').innerText = document.getElementById('category').value + ' - ' + document.getElementById('d_role').value;
+            document.getElementById('r_wa').innerText = document.getElementById('whatsapp').value;
             nextStep(4);
         }
 
-        // --- SUPABASE SETUP ---
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-    // ⚠️ REPLACE THESE WITH YOUR ACTUAL KEYS FROM SUPABASE DASHBOARD
-            const SUPABASE_URL = 'https://okefeflworafgikasbzq.supabase.co';
-            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rZWZlZmx3b3JhZmdpa2FzYnpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NjQwOTIsImV4cCI6MjA4MzU0MDA5Mn0.v9Lk0KjqQ4f7POg3zrOK8qkyb6v3l3ttKwsFAczVYkc'; // Use the ANON key, safe for public browsers
-
-            // Initialize Supabase
-            let supabase;
-            try {
-                supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch (e) {
-                console.log("Supabase awaiting configuration...");
-    }
-
-            async function submitFinal() {
-        if (!supabase) {
-                alert("Supabase not configured! Add your URL and Key in index.html");
-            return;
-        }
+        // --- SUBMIT ---
+        async function submitFinal() {
+            if (!document.getElementById('terms').checked) return alert("Please agree to the Terms.");
 
             const btn = document.querySelector('button[onclick="submitFinal()"]');
-            btn.innerText = "Processing...";
+            btn.innerText = "Submitting...";
             btn.disabled = true;
 
-            // Collect Data using IDs
             const payload = {
                 full_name: document.getElementById('fname').value,
-            age: document.getElementById('age').value,
-            gender: document.querySelector('input[name="gender"]:checked')?.value || '',
-            category: document.getElementById('category').value,
-
-            institution_name: document.getElementById('d_inst').value,
-            role_title: document.getElementById('d_role').value,
-            extra_detail: document.getElementById('d_extra').value,
-
-            whatsapp: document.getElementById('whatsapp').value,
-            work_email: document.getElementById('w_email').value,
-            personal_email: document.getElementById('p_email').value,
-            linkedin_url: document.getElementById('linkedin').value,
-            social_handle: document.getElementById('social').value,
-
-            status: 'Pending',
-            submitted_at: new Date().toISOString()
-        };
+                age: document.getElementById('age').value || 0,
+                gender: document.querySelector('input[name="gender"]:checked').value,
+                category: document.getElementById('category').value,
+                institution_name: document.getElementById('d_inst').value,
+                role_title: document.getElementById('d_role').value,
+                extra_detail: document.getElementById('d_extra').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                work_email: document.getElementById('w_email').value,
+                personal_email: document.getElementById('p_email').value,
+                linkedin_url: document.getElementById('linkedin').value,
+                social_handle: document.getElementById('social').value,
+                status: 'Pending',
+                submitted_at: new Date().toISOString()
+            };
 
             try {
-            // 1. Check Duplicate (Optional but good) - Supabase handles this if you set 'unique' constraint in DB
-            // We just let the Insert fail if duplicate unique key usually, or query first.
-            const {data: existing } = await supabase
-            .from('applications')
-            .select('id')
-            .eq('whatsapp', payload.whatsapp)
-            .single();
+                const { error } = await db.from('applications').insert([payload]);
+                if (error) throw error;
 
-            if (existing) {
-                // Duplicate Logic
-                localStorage.setItem('connvel_app_submitted', 'true');
-            document.getElementById('mainForm').style.display = 'none';
-            document.getElementById('alreadySubmittedOverlay').style.display = 'flex';
-            return;
+                localStorage.setItem('connvel_submitted', 'true');
+                document.getElementById('mainForm').style.display = 'none';
+                document.getElementById('successOverlay').style.display = 'flex';
+
+            } catch (e) {
+                alert("Error: " + e.message);
+                btn.innerText = "Try Again";
+                btn.disabled = false;
             }
-
-            // 2. Insert to Supabase
-            const {error} = await supabase
-            .from('applications')
-            .insert([payload]);
-
-            if (error) throw error;
-
-            // 3. Success Logic
-            localStorage.setItem('connvel_app_submitted', 'true');
-            document.getElementById('mainForm').style.display = 'none';
-            document.getElementById('successOverlay').style.display = 'flex';
-            document.getElementById('refId').innerText = "REF-CV-" + Math.floor(1000 + Math.random() * 9000);
-
-        } catch (err) {
-                console.error(err);
-            alert("Error submitting: " + err.message);
-            btn.innerText = "Submit Application";
-            btn.disabled = false;
         }
-    }
     </script>
-
 </body>
 
 </html>
